@@ -1,12 +1,12 @@
 # WeatherApp
 Angular App for Techspert - In Progress
 
-Tasks
+Tasks:
 Create a new branch (name it after you) or create a publicly accessible repo.
 Create a new angular project with the features specified in this document
 Submit your branch/repo for review
 
-Instructions
+Instructions:
 Create a new angular project
 Use the open weather API to retrieve weather information on at least 10 cities
 Populate a table within the app with this data
@@ -14,8 +14,8 @@ Introduce configurable pagination (rows of 5, 10, 20)
 Introduce sortable columns
 Introduce a filter for searching by city name
 
-Additional Tasks
-You may be asked to complete one or more of these additional tasks:
+Additional Tasks:
+You may be asked to complete one or more of these additional tasks -
 
 Write or describe some unit tests
 Create a graph that displays the median average global temperature and plot cities available in the API above/below the median
