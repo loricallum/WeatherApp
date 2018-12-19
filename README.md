@@ -1,5 +1,5 @@
 # WeatherApp
-Angular App for Techspert - In Progress
+Angular App for Techspert
 
 Tasks:
 Create a new branch (name it after you) or create a publicly accessible repo.
