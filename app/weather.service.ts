@@ -16,7 +16,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class WeatherService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: Http) { }
 
 
   getWeatherItems() {
