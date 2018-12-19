@@ -1,3 +1,24 @@
+<table datatable [dtOptions]="dtOptions" class="row-border hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngIf="data?.length != 0">
+      <tr *ngFor="let data of datas">
+          <td>{{ data.id }}</td>
+          <td>{{ data.city }}</td>
+          <td>{{ data.temp }}</td>
+      </tr>
+  </tbody>
+  <tbody *ngIf="datas?.length == 0">
+    <tr>
+      <td colspan="3" class="no-data-available">No data!</td>
+    </tr>
+  <tbody>
+</table>
 
 <script>
 const endpoint = 'http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={194333f5b09188fbda8c4a3bbfea30b2}';
