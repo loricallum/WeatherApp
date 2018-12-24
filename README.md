@@ -1,3 +1,3 @@
 # Weather API using Angular
 
-Incomplete
+Functional Weather fetching AngularJS app.
