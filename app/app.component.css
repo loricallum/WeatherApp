@@ -1,1 +1,76 @@
-body { padding-top:50px; }
+body {
+            background: white no-repeat;
+            
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: black;
+        }
+
+            h2 a {
+                color: #0184e3;
+                text-decoration: none;
+            }
+
+                h2 a:hover {
+                    text-decoration: underline;
+                }
+
+        #content {
+            margin: 0 auto;
+            width: 960px;
+            background: #FFF;
+            padding: 20px;
+        }
+
+            #content h1 {
+                text-align: center;
+                text-decoration: underline;
+                color: #000;
+            }
+
+            #content h3 {
+                color: #000000;
+            }
+
+        table {
+            width: 100%;
+        }
+
+            table tr td {
+                width: 40%;
+                text-align: center;
+            }
+
+        #errorDiv {
+            background-color: red;
+            color: #FFFFFF;
+            padding-left: 25px;
+        }
+
+        #download {
+            padding: 5px 10px;
+            background: #4CAF50;
+            border: none;
+            color: #FFF;
+            cursor: pointer;
+        }
+
+            #download:hover {
+                color: #4CAF50;
+                background: #FFF;
+            }
+
+        #submitButton {
+            cursor: pointer;
+        }
+
+            #submitButton:disabled {
+                color: red;
+                cursor: not-allowed;
+            }
+
+        .textAlignCenter {
+            text-align: center;
+        }

@@ -1,61 +1,59 @@
+ $http.defaults.headers.common["Ocp-Apim-Subscription-Key"] = "194333f5b09188fbda8c4a3bbfea30b2";
+  
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Component } from '@angular/core';
-import { WeatherService } from './weather.service';
-import { Chart } from 'chart.js';
+import { Http, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { AppComponent } from './app.component';
+
+@NgModule({
+	declarations: [
+		AppComponent
+		],
+
+	imports: [
+		BrowserModule,
+		FormsModule,
+		HttpModule,
+		NgbModule
+
+		],
+		providers: [AppComponent],
+		bootstrap: [AppComponent]
+})
+export class AppModule { }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'Weather App';
-  chart = [];
+	title = 'app working!';
+ 	private apiUrl = 'http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=194333f5b09188fbda8c4a3bbfea30b2';
+	data: any = {};
+}
 
-  constructor(private _weather: WeatherService) {}
+constructor(private http: Http) {
+	console.log('Hello');
+	this.getContacts();
+	this.getData();
+}
 
-  ngOnInit() {
-    this._weather.dailyForecast()
-      .subscribe(res => {
-        let temp_max = res['list'].map(res => res.main.temp_max);
-        let temp_min = res['list'].map(res => res.main.temp_min);
-        let alldates = res['list'].map(res => res.dt)
+getData() {
+	return this.http.get(this.apiUrl)
+	.map((res: Response) => res.json())
+}
 
-        let weatherDates = []
-        alldates.forEach((res) => {
-            let jsdate = new Date(res * 1000)
-            weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }))
-        })
-        this.chart = new Chart('canvas', {
-          type: 'line',
-          data: {
-            labels: weatherDates,
-            datasets: [
-              {
-                data: temp_max,
-                borderColor: "#3cba9f",
-                fill: false
-              },
-              {
-                data: temp_min,
-                borderColor: "#ffcc00",
-                fill: false
-              },
-            ]
-          },
-          options: {
-            legend: {
-              display: false
-            },
-            scales: {
-              xAxes: [{
-                display: true
-              }],
-              yAxes: [{
-                display: true
-              }],
-            }
-          }
-        });
-      })
-  }
+getContacts() {
+	this.getData().subscribe(data => {
+	console.log(data);
+	this.data = data
+	})
+}
 }

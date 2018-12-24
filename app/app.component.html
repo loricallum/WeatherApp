@@ -1,82 +1,100 @@
+
+<head>
+    <meta charset="utf-8" />
+    <title>Weather API</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+  </head>
+
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <!--Populate a table within the app with this data-->
-  <div class="app-component">
-<h1 class="text-center">The Weather</h1>
+    <img width="100" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+</div>
+<link rel="stylesheet" href="app.component.css">
+
+<div class="app-component">
+<h1 class="text-center">Weather App</h1>
 <app-table></app-table>
 </div>
 
-  <!--Introduce a filter for searching by city name-->
-  <div class="container" ng-app="sortApp" ng-controller="mainController">
-
-    <div class="alert alert-info">
-      <p>Sort Type: {{ sortType }}</p>
-      <p>Sort Reverse: {{ sortReverse }}</p>
-      <p>Search Data: {{ searchData }}</p>
-    </div>
-
-    <form>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-search"></i></div>
-          <input type="text" class="form-control" placeholder="Weather Search" ng-model="searchWeather">
+<body>
+    <h1>OpenWeatherMap API data in jQuery DataTables</h1>
+    
+    
+        <h3>Click to get Weather Information of different Cities</h3>
+        <div class="textAlignCenter">
+            <button id="submitButton">Get Weather</button>
+            <table id="weatherTable"></table>
         </div>
-      </div>
-    </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
-    <table class="table table-bordered table-striped">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#reset").click(function (e) {
+                location.reload();
+            });
 
-      <thead>
-        <tr>
-          <td>
-            <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            $("#submitButton").click(function (e) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://api.openweathermap.org/data/2.5/group?id=2643741,2644688,2633352,2654675,2988507,2990969,2911298,2925535,2950159,3120501,3128760,5128581,4140963,4930956,5106834,5391959,5368361,5809844,4099974,4440906&appid=194333f5b09188fbda8c4a3bbfea30b2&units=metric",
+                    dataType: "json",
+                    success: function (result, status, xhr) {
+                        res = CreateWeatherJson(result);
+                        $("#weatherTable").append("<thead><tr><th>City Id</th><th>City Name</th><th>Temperature</th><th>Min Temp</th><th>Max Temp</th><th>Humidity</th><th>Pressure</th></thead></table>");
+                        $('#weatherTable').DataTable({
+                            data: JSON.parse(res),
+                            columns: [
+                                { data: 'cityId' },
+                                { data: 'cityName' },
+                                { data: 'temp' },
+                                { data: 'tempMin' },
+                                { data: 'tempMax' },
+                                { data: 'pressure' },
+                                { data: 'humidity' }
+                            ],
+                            "pageLength": 10
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                    }
+                });
+            });
 
-              <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-              <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </td>
-          <td>
-            <a href="#" ng-click="sortType = ''; sortReverse = !sortReverse">
+            function CreateWeatherJson(json) {
+                var newJson = "";
+                for (i = 0; i < json.list.length; i++) {
+                    cityId = json.list[i].id;
+                    cityName = json.list[i].name;
+                    temp = json.list[i].main.temp
+                    pressure = json.list[i].main.pressure
+                    humidity = json.list[i].main.humidity
+                    tempmin = json.list[i].main.temp_min
+                    tempmax = json.list[i].main.temp_max
 
-              <span ng-show="sortType == '' && !sortReverse" class="fa fa-caret-down"></span>
-              <span ng-show="sortType == '' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </td>
-          <td>
-            <a href="#" ng-click="sortType = ''; sortReverse = !sortReverse">
+                    newJson = newJson + "{";
+                    newJson = newJson + "\"cityId\"" + ": " + cityId + ","
+                    newJson = newJson + "\"cityName\"" + ": " + "\"" + cityName + "\"" + ","
+                    newJson = newJson + "\"temp\"" + ": " + temp + ","
+                    newJson = newJson + "\"pressure\"" + ": " + pressure + ","
+                    newJson = newJson + "\"humidity\"" + ": " + humidity + ","
+                    newJson = newJson + "\"tempMin\"" + ": " + tempmin + ","
+                    newJson = newJson + "\"tempMax\"" + ": " + tempmax
+                    newJson = newJson + "},";
+                }
+                return "[" + newJson.slice(0, newJson.length - 1) + "]"
+            }
+        });
+    </script>
 
-              <span ng-show="sortType == '' && !sortReverse" class="fa fa-caret-down"></span>
-              <span ng-show="sortType == '' && sortReverse" class="fa fa-caret-up"></span>
-            </a>
-          </td>
-        </tr>
-      </thead>
 
-      <tbody>
-        <tr ng-repeat=" | orderBy:sortType:sortReverse | filter:search">
-          <td>{{  }}</td>
-          <td>{{  }}</td>
-          <td>{{  }}</td>
-        </tr>
-      </tbody>
 
-    </table>
 
-    <p class="text-center text-muted">
-      <a href="#" target="_blank"></a>
-    </p>
 
-    <p class="text-center">
-      by <a href="" target="_blank"></a>
-    </p>
 
-  </div>
-
-  <!--Create a graph-->
-  <div [hidden]="!chart">
-    <canvas id="canvas">{{ chart }}</canvas>
-  </div>
 
 <router-outlet></router-outlet>
