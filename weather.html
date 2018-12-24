@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<?
+$url = "http://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=194333f5b09188fbda8c4a3bbfea30b2";
+
+$getweather = simplexml_load_file($url);
+$gethumidity = $getweather->list->item->humidity['value'];
+$gettemp = $getweather->list->item->temperature['value'];
+?>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>weather api</title>
+</head>
+<body>
+
+	<style>
+	html {
+		background-color: orange;
+		font-family: arial;
+		text-align: center;
+	}
+	ol{
+		font-size: 20px;
+	}
+	</style>
+
+<h1>Weather Fetching</h1>
+<ol>
+	<li>Humidity: <? echo($gethumidity); ?>%</li>
+	<li>Temperature: <? echo($gettemperature); ?> &deg;C<</li>
+</ol>
+</body>
+</html>
