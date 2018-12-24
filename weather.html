@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?
-$url = "http://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=194333f5b09188fbda8c4a3bbfea30b2";
+$url = "http://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=YOUR ID INSERT HERE";
 
 $getweather = simplexml_load_file($url);
 $gethumidity = $getweather->list->item->humidity['value'];
