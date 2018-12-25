@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+         function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'City');
+        data.addColumn('number', 'Temperature');
+        data.addRows([
+          ['London', 7],
+          ['Leeds', 7],
+          ['York', 9],
+          ['Bristol', 6],
+          ['Paris', 8],
+          ['Hamburg', 5],
+          ['Frankfurt', 5.5],
+          ['Berlin', 14.76],
+          ['New York', 3]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Christmas Day Weather Displayed as Line Graph (Dec 2018)',
+                       'width':700,
+                       'height':300};
+
+
+
+        // Instantiate and draw chart, passing in some options.
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    
+      }
+           
+
+
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+  </body>
+</html>
