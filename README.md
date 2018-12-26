@@ -2,7 +2,7 @@
 
 Functional Weather fetching AngularJS app.
 
-To view the Weather recieved from OpenWeather API,
+To view the Weather received from OpenWeather API,
 Select: app folder > app.component.html (in AngularJS)
 
 The following has been completed: 
